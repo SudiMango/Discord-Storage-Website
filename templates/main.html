@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Main</title>
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+    <body>
+        <div class="main-page">
+            {% if user_email %}
+                <h1>Hi, {{ user_email }}!</h1>
+            {% endif %}
+            
+            <div class="container">
+                <div class="upload-section">
+                    <h2>Upload files</h2>
+                    <form method="post" enctype="multipart/form-data">
+                        <div><input type="file" name="file" id="file"></div>
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <ul style="list-style-type: none; padding: 0;">
+                            {% for category, message in messages %}
+                            <li style="color: green;">{{ message }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                        {% endwith %}
+                        <button>Upload</button>
+                    </form>
+                    
+                </div>
+            </div>
+
+            
+            <a href="/logout">
+                <input type="submit" value="Logout">
+            </a>
+        </div>
+    </body>
+</html>

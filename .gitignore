@@ -1,0 +1,4 @@
+.env
+credentials.json
+key.bin
+__pycache__

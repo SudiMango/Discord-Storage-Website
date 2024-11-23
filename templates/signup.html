@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign up</title>
+        <link rel="stylesheet" href="../static/style.css">
+    </head>
+    <body>
+        <div class="login-container">
+            <h2 class="login-title">Sign up</h2>
+            <form action="/signup" method="post">
+                <div class="form-group">
+                    <label for="email" class="lbl-left">Email:</label>
+                    <input type="text" name="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="lbl-left">Password:</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="cf_password" class="lbl-left">Confirm password:</label>
+                    <input type="password" name="cf_password" id="cf_password" required>
+                </div>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul style="list-style-type: none; padding: 0;">
+                    {% for category, message in messages %}
+                    <li style="color: red;">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                {% endwith %}
+                <input type="submit" value="Sign up">
+            </form>
+            <label for="signup" class="signup">Already have an account? 
+                <a href="/login">Log in.</a>
+            </label>
+        </div>
+    </body>
+</html>
