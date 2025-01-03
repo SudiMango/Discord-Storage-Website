@@ -1,0 +1,125 @@
+:root {
+    --base-clr: #2C2F33;
+    --line-clr: #23272A;
+    --text-clr: #FFFFFF;
+    --accent-clr: #7289DA;
+    --secondary-text-clr: #99AAB5;
+    --hover-clr: #3A3E44;
+    --secondary-hover-clr: rgba(75, 78, 82, 0.719)
+}
+
+
+main {
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+#search {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    min-width: 50%;
+    max-width: 75%;
+    height: 30px;
+    background-color: var(--hover-clr);
+    color: var(--text-clr);
+    font-size: large;
+    border: 1.5px solid var(--line-clr);
+    border-radius: 15px;
+    padding: 3px;
+}
+
+#search::placeholder {
+    font-size: large;
+}
+
+#file-list {
+    min-width: 50%;
+    max-height: 500px;
+    min-height: 500px;
+    max-width: 75%;
+    overflow-y: scroll;
+    border: 2px solid var(--accent-clr);
+    border-radius: 15px;
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+}
+
+.item {
+    padding: 10px;
+    border-bottom: 2px solid var(--line-clr);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    svg {
+        transition: rotate 300ms ease;
+    }
+}
+
+.item:hover {
+    background-color: var(--hover-clr);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    max-height: 0px;
+    overflow: hidden;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+    border-bottom: none;
+
+    transition: max-height 300ms ease;
+}
+
+.info .buttons {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.info .buttons button {
+    width: 20%;
+    background-color: var(--accent-clr);
+    border: none;
+    border-radius: 4px;
+    color: var(--text-clr);
+    font-weight: bold;
+    font-size: 1vw;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 4px;
+
+    svg {
+        margin-right: 5px;
+    }
+}
+
+.info .buttons button:last-child {
+    background-color: rgba(255, 0, 0, 0.603);
+    margin-right: 0px;
+}
+
+.info.open {
+    max-height: 148px;
+    border-bottom: 5px solid var(--line-clr);
+}
+
+.arrow.rotate {
+    rotate: 180deg;
+}

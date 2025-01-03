@@ -1,7 +1,5 @@
-import os
 import io
 import math
-from discord import Message
 import discord
 import cipher
 
@@ -25,15 +23,87 @@ async def upload_chunks(file, file_name, file_size, channel) -> None:
     # Metadata notes
     """
         Line 1: original file name
-        Line 2: file extension
-        Line 3 and onwards: message ids
+        Line 2 and onwards: message ids
     """
-    metadata_content = f"{file_name.split(".")[0]}\n{file_name.split(".")[1]}\n" + "\n".join(map(str, message_ids))
+    metadata_content = ""
+    for i in range(len(message_ids)):
+        if (i != (len(message_ids) - 1)):
+            metadata_content = metadata_content + f"{message_ids[i]}\n"
+        else:
+            metadata_content = metadata_content + f"{message_ids[i]}"
     metadata_file = io.BytesIO(cipher.encrypt(metadata_content.encode()))
     metadata_file.name = f"{file_name}_metadata.bin"
 
     msg = await channel.send(file=discord.File(metadata_file))
     return msg.id
+
+async def download_file(mtd_id, channel):
+    fetched_msg = await channel.fetch_message(mtd_id)
+    mtd_msg_bytes = io.BytesIO(await fetched_msg.attachments[0].read())
+    mtd_msg = cipher.decrypt(mtd_msg_bytes).decode()
+
+    repr(mtd_msg)
+
+    ids = mtd_msg.split('\n')
+    virtual_file = io.BytesIO()
+    for id in ids:
+        chunk_msg = await channel.fetch_message(id)
+        msg_bytes = io.BytesIO(await chunk_msg.attachments[0].read())
+        msg = cipher.decrypt(msg_bytes)
+        virtual_file.write(msg)
+
+    virtual_file.seek(0)
+    return virtual_file
+
+async def delete_file(mtd_id, channel):
+    fetched_msg = await channel.fetch_message(mtd_id)
+    mtd_msg_bytes = io.BytesIO(await fetched_msg.attachments[0].read())
+    mtd_msg = cipher.decrypt(mtd_msg_bytes).decode()
+
+    repr(mtd_msg)
+
+    ids = mtd_msg.split('\n')
+    for id in ids:
+        chunk_msg = await channel.fetch_message(id)
+        await chunk_msg.delete()
+
+    await fetched_msg.delete()
+
+    
+        
+"""
+async def download_file(mtd_msg, channel) -> None:
+    raw_data = bytes()
+    to_read = []
+    mtd_filename = None
+    og_filename, og_ext = "", ""
+
+    for a in mtd_msg.attachments:
+        await a.save(a.filename)
+        mtd_filename = a.filename
+
+    with open(mtd_filename, "r") as f:
+        for i in f.readlines():
+            to_read.append(i[:-1])
+        og_filename, og_ext = to_read.pop(0), to_read.pop(0)
+    os.remove(mtd_filename)
+    
+    count = 1
+    for i in to_read:
+        chunk_msg = await channel.fetch_message(i)
+        for a in chunk_msg.attachments:
+            await a.save(a.filename)
+            with open(a.filename, "rb") as f:
+                raw_data += cipher.decrypt(f)
+            os.remove(a.filename)
+        print(f"Retrieved {round(float((count/len(to_read))*100), 1)}%...")
+        count += 1
+
+    with open(f"{og_filename}_download{og_ext}", "wb") as f:
+        print("Downloading to system...")
+        f.write(raw_data)
+"""
+    
 
 """
 async def upload_chunks(file, channel) -> None:
@@ -78,35 +148,3 @@ async def upload_chunks(file, channel) -> None:
 
 
 
-"""
-async def download_file(mtd_msg, channel) -> None:
-    raw_data = bytes()
-    to_read = []
-    mtd_filename = None
-    og_filename, og_ext = "", ""
-
-    for a in mtd_msg.attachments:
-        await a.save(a.filename)
-        mtd_filename = a.filename
-
-    with open(mtd_filename, "r") as f:
-        for i in f.readlines():
-            to_read.append(i[:-1])
-        og_filename, og_ext = to_read.pop(0), to_read.pop(0)
-    os.remove(mtd_filename)
-    
-    count = 1
-    for i in to_read:
-        chunk_msg = await channel.fetch_message(i)
-        for a in chunk_msg.attachments:
-            await a.save(a.filename)
-            with open(a.filename, "rb") as f:
-                raw_data += cipher.decrypt(f)
-            os.remove(a.filename)
-        print(f"Retrieved {round(float((count/len(to_read))*100), 1)}%...")
-        count += 1
-
-    with open(f"{og_filename}_download{og_ext}", "wb") as f:
-        print("Downloading to system...")
-        f.write(raw_data)
-"""
