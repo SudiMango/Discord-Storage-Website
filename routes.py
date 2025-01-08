@@ -57,12 +57,36 @@ async def before_serving():
 # Home
 @routes_bp.route("/")
 async def home():
-    return await render_template("home.html")
+    if "user" not in session:
+        return await render_template("home.html")
+    else:
+        return await render_template("home.html", user_email=session["user"])
 
 
 
 
 # Main
+
+# Profile
+@routes_bp.route("/profile")
+async def view_profile():
+    if not "user" in session:
+        return redirect("/")
+    
+    userinfo = db.collection(session["user"]).document("userinfo")
+    date_joined = userinfo.get().to_dict().get("dateJoined")
+    num_files = userinfo.get().to_dict().get("numFiles")
+    storage_used = userinfo.get().to_dict().get("totalStorage")
+    
+    return await render_template("profile.html",
+                                 user_email=session["user"],
+                                 date_joined=date_joined,
+                                 num_files=num_files,
+                                 storage_used=storage_used)
+
+
+
+
 
 # Upload section
 @routes_bp.route("/upload")

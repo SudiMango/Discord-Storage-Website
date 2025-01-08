@@ -1,0 +1,158 @@
+:root {
+    --base-clr: #2C2F33;
+    --line-clr: #23272A;
+    --text-clr: #FFFFFF;
+    --accent-clr: #7289DA;
+    --secondary-text-clr: #99AAB5;
+    --hover-clr: #3A3E44;
+    --secondary-hover-clr: rgba(75, 78, 82, 0.719)
+}
+
+nav {
+    background-color: var(--base-clr);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+}
+
+nav ul {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+nav li {
+    height: 60px;
+}
+
+nav a {
+    height: 100%;
+    padding: 0 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-clr);
+    font-size: large;
+}
+
+nav a:hover {
+    background-color: var(--hover-clr);
+}
+
+.top li:first-child {
+    margin-right: auto;
+}
+
+.p-view {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    height: inherit;
+    width: 200px;
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+
+    li {
+        width: 100%;
+    }
+
+    .line {
+        height: 2px;
+        background-color: rgb(153, 170, 181, 0.25);
+        width: 80%;
+    }
+}
+
+
+
+.logo {
+    font-size: 25;
+    font-weight: bold;
+    color: var(--accent-clr);
+}
+
+.logo:hover {
+    background-color: var(--base-clr);
+}
+
+.profile {
+    border-left: 7px solid var(--line-clr);
+}
+
+.profile-nouser {
+    display: none;
+}
+
+.profile-withuser {
+    display: none;
+
+    ul li:first-child span {
+        display: flex;
+        font-size: large;
+        color: var(--text-clr);
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    ul li:last-child {
+        height: 40px;
+        a {
+            color: rgb(216, 0, 0);
+        }
+    }
+}
+
+
+
+
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 250px;
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    backdrop-filter: blur(10px);
+}
+
+.sidebar li {
+    width: 100%;
+}
+
+.sidebar a {
+    width: 100%;
+}
+
+.menuButton {
+    display: none;
+}
+
+@media(max-width: 800px) {
+    .hideOnMobile {
+        display: none;
+    }
+    
+    .menuButton {
+        display: block;
+    }
+}
+
+@media(max-width: 400px) {
+    .sidebar {
+        width: 100%;
+    }
+}
