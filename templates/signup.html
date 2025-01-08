@@ -3,9 +3,91 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sign up</title>
-        <link rel="stylesheet" href="../static/style.css">
+        <link rel="stylesheet" href="static/css/signup.css">
+        <link rel="stylesheet" href="static/css/navbar.css">
+        <script type="text/javascript" src="static/js/matrix.js" defer></script>
     </head>
     <body>
+        <nav>
+            <ul class="sidebar">
+                <li onclick=hideSidebar()>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#FFFFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                    </a>
+                </li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/upload">Upload</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <button class="profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#2e2e2e"><path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/></svg>
+                </button>
+            </ul>
+
+            <ul class="top">
+                <li><a class="logo" href="/">discloud</a></li>
+                <li class="hideOnMobile"><a href="/">Home</a></li>
+                <li class="hideOnMobile"><a href="/about">About</a></li>
+                <li class="hideOnMobile"><a href="/contact">Contact</a></li>
+                <li class="profile hideOnMobile" onclick="toggleProfile('{{user_email}}')">
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#FFFFFF"><path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/></svg>
+                        <svg id="arrow" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M480-360 280-560h400L480-360Z"/></svg>
+                    </a>
+                </li>
+                <li class="menuButton" onclick=showSidebar()>
+                    <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="26px" viewBox="0 -960 960 960" width="26px" fill="#FFFFFF"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a>
+                </li>
+            </ul>
+
+            <div class="profile-nouser hideOnMobile">
+                <ul class="p-view">
+                    <li><a href="/login">Login</a></li>
+                    <li class="line"></li>
+                    <li><a href="/signup">Sign up</a></li>
+                </ul>
+            </div>
+
+            <div class="profile-withuser hideOnMobile">
+                <ul class="p-view">
+                    <li><span>Hi, {{user_email}}!</span></li>
+                    <li><a href="/profile">Profile</a></li>
+                    <li class="line"></li>
+                    <li><a href="/upload">Upload</a></li>
+                    <li class="line"></li>
+                    <li><a href="/files">Files</a></li>
+                    <li class="line"></li>
+                    <li><a href="/logout">Log out</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <canvas id="matrix"></canvas>
+
+
+        <main>
+            <div class="fill-div">
+                <div class="background">
+                    <h2>Sign up</h2>
+                    <div class="group">
+                        <label for="email" class="left">Email:</label>
+                        <input type="text" name="email" id="email" required>
+                    </div>
+                    <div class="group">
+                        <label for="password" class="left">Password:</label>
+                        <input type="password" name="password" id="password" required>
+                    </div>
+                    <div class="group">
+                        <label for="cf_password" class="left">Confirm password:</label>
+                        <input type="password" name="cf_password" id="cf_password" required>
+                    </div>
+                    <button class="normal" onclick=handleSignup()>Sign up</button>
+                    <label>Already have an account? <a href="/login">Log in.</a></label>
+                </div>
+            </div>
+        </main>
+
+
+        <!--
         <div class="login-container">
             <h2 class="login-title">Sign up</h2>
             <form action="/signup" method="post">
@@ -21,20 +103,12 @@
                     <label for="cf_password" class="lbl-left">Confirm password:</label>
                     <input type="password" name="cf_password" id="cf_password" required>
                 </div>
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <ul style="list-style-type: none; padding: 0;">
-                    {% for category, message in messages %}
-                    <li style="color: red;">{{ message }}</li>
-                    {% endfor %}
-                    </ul>
-                {% endif %}
-                {% endwith %}
                 <input type="submit" value="Sign up">
             </form>
             <label for="signup" class="signup">Already have an account? 
                 <a href="/login">Log in.</a>
             </label>
         </div>
+        -->
     </body>
 </html>

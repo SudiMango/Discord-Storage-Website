@@ -8,6 +8,22 @@
     --secondary-hover-clr: rgba(75, 78, 82, 0.719)
 }
 
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5rem;
+}
+
+body {
+    min-height: 100dvh;
+    background-color: var(--base-clr);
+    color: var(--text-clr);
+}
+
 
 
 

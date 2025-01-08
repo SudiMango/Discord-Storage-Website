@@ -5,7 +5,7 @@ import os
 # App setup
 app = Quart(__name__)
 app.secret_key = os.getenv("APP_KEY")
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024 * 1024
 app.register_blueprint(routes_bp)
 
 
