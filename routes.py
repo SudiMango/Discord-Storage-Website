@@ -187,13 +187,11 @@ async def signup():
                 db.collection(email).document("userinfo").set({"channelId": channel.id, "numFiles": 0, "totalStorage": 0})
                 db.collection(email).document("fileinfo").set({})
                 session["user"] = email
-                return redirect("/")
+                return jsonify({'success': True}), 200
             except:
-                await flash("Failed to create new user.", "error")
-                return redirect("/signup")
+                return jsonify({'error': 'Failed to sign up user. Please try again.'}), 400
         else:
-            await flash("Error with passwords.", "error")
-            return redirect("/signup")
+            return jsonify({'error': 'Password must be at least 6 characters long.'}), 400
 
     return await render_template("signup.html")
 
@@ -202,17 +200,16 @@ async def signup():
 # Login
 @routes_bp.route("/login", methods=["POST", "GET"])
 async def login():
-
+    
     if request.method == "POST":
         email = (await request.form).get("email")
         password = (await request.form).get("password")
         try:
             auth.sign_in_with_email_and_password(email, password)
             session["user"] = email
-            return redirect("/")
+            return jsonify({'success': True}), 200
         except:
-            await flash("Failed to login user.", "error")
-            return redirect("/login")
+            return jsonify({'error': 'Failed to log in user. Please try again.'}), 400
     
     return await render_template("login.html")
 

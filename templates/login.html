@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="static/css/login.css">
         <link rel="stylesheet" href="static/css/navbar.css">
         <script type="text/javascript" src="static/js/matrix.js" defer></script>
+        <script type="text/javascript" src="static/js/navbar.js" defer></script>
+        <script type="text/javascript" src="static/js/auth.js" defer></script>
     </head>
     <body>
         <nav>
@@ -67,15 +69,17 @@
             <div class="fill-div">
                 <div class="background">
                     <h2>Login</h2>
-                    <div class="group">
-                        <label for="email" class="left">Email:</label>
-                        <input type="text" name="email" id="email" required>
-                    </div>
-                    <div class="group">
-                        <label for="password" class="left">Password:</label>
-                        <input type="password" name="password" id="password" required>
-                    </div>
-                    <button class="normal" onclick=handleLogin()>Login</button>
+                    <form id="login">
+                        <div class="group">
+                            <label for="email" class="left">Email:</label>
+                            <input type="text" name="email" id="email" required>
+                        </div>
+                        <div class="group">
+                            <label for="password" class="left">Password:</label>
+                            <input type="password" name="password" id="password" required>
+                        </div>
+                        <button class="normal" type="submit">Login</button>
+                    </form>
                     <label>Don't have an account yet? <a href="/signup">Sign Up.</a></label>
                 </div>
             </div>
@@ -98,6 +102,16 @@
             </form>
             <label>Don't have an account yet? <a href="/signup">Sign Up</a></label>
         </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <script>
+                        alert("{{category}}: {{message}}");
+                    </script>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         -->
     </body>
 </html>
