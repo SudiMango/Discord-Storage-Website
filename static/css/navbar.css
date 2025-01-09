@@ -61,14 +61,13 @@ nav a:hover {
     li {
         width: 100%;
     }
-
-    .line {
-        height: 2px;
-        background-color: rgb(153, 170, 181, 0.25);
-        width: 80%;
-    }
 }
 
+.line {
+    height: 2px;
+    background-color: rgb(153, 170, 181, 0.25);
+    width: 80%;
+}
 
 
 .logo {
@@ -131,11 +130,67 @@ nav a:hover {
 
 .sidebar li {
     width: 100%;
+    
+    a {
+        padding: 0;
+    }
+}
+
+.sidebar li:first-child {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    a {
+        padding: 0;
+    }
+}
+
+.sidebar .profile {
+    border-left: 0;
+}
+
+.profile-nouser-m {
+    border-left: 7px solid var(--line-clr);
+    display: none;
+}
+
+.profile-withuser-m {
+    border-left: 7px solid var(--line-clr);
+    display: none;
+
+    ul li:first-child span {
+        display: flex;
+        font-size: large;
+        color: var(--text-clr);
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    ul li:last-child {
+        height: 40px;
+        a {
+            color: rgb(216, 0, 0);
+        }
+    }
+}
+
+.p-view-m {
+    display: flex;
+    flex-direction: column;
+
+    li, li:first-child {
+        width: 100%;
+    }
 }
 
 .sidebar a {
     width: 100%;
 }
+
+
 
 .menuButton {
     display: none;

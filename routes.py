@@ -189,9 +189,9 @@ async def signup():
                 session["user"] = email
                 return jsonify({'success': True}), 200
             except:
-                return jsonify({'error': 'Failed to sign up user. Please try again.'}), 400
+                return jsonify({'error': 'Failed to sign up user. User may already exist. Please try again.'}), 400
         else:
-            return jsonify({'error': 'Password must be at least 6 characters long.'}), 400
+            return jsonify({'error': 'Error with passwords. Please try again.'}), 400
 
     return await render_template("signup.html")
 
