@@ -77,7 +77,7 @@ main::before {
     backdrop-filter: blur(10px);
     padding: 20px;
     border-radius: 6px;
-    width: 20vw;
+    width: 300px;
 
     form {
         display: flex;
@@ -97,31 +97,9 @@ main::before {
         color: var(--text-clr);
         width: 50%;
         border-radius: 4px;
-        font-size: 1.2vw;
+        font-size: large;
         font-weight: bold;
         cursor: pointer;
-    }
-
-
-    .google {
-        padding: 0.5rem;
-        background-color: var(--accent-clr);
-        border: none;
-        margin-top: 7%;
-        margin-bottom: 2%;
-        color: var(--text-clr);
-        width: 80%;
-        border-radius: 4px;
-        font-size: 1.1vw;
-        cursor: pointer;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        svg {
-            margin-right: 4%;
-        }
     }
 
     button:hover {
