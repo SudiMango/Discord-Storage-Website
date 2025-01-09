@@ -133,7 +133,7 @@ async def files_view():
         items = db.collection(session["user"]).document("fileinfo").get().to_dict()
         sorted_items = dict(sorted(items.items(), key=lambda x: int(x[0]), reverse=True))
 
-        return await render_template("files_list.html", items=sorted_items)
+        return await render_template("files_list.html", items=sorted_items, user_email=session["user"])
 
     return await render_template("home.html")
 

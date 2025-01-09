@@ -8,13 +8,30 @@
     --secondary-hover-clr: rgba(75, 78, 82, 0.719)
 }
 
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5rem;
+}
+
+body {
+    min-height: 100dvh;
+    background-color: var(--base-clr);
+    color: var(--text-clr);
+}
+
+
 
 main {
-    align-items: center;
-    justify-content: center;
-    align-content: center;
     display: flex;
     flex-direction: column;
+    height: calc(100vh - 60px);
+    justify-content: center;
+    align-items: center;
 }
 
 
