@@ -1,6 +1,6 @@
 from discord import Intents, Client, Message, utils
 import asyncio
-from quart import Blueprint, request, session, render_template, redirect, flash, send_file, jsonify
+from quart import Blueprint, request, session, render_template, redirect, flash, send_file, jsonify, abort
 from dotenv import load_dotenv
 import os
 import pyrebase
@@ -70,8 +70,9 @@ async def home():
 # Profile
 @routes_bp.route("/profile")
 async def view_profile():
+    
     if not "user" in session:
-        return redirect("/")
+        return redirect("/login")
     
     userinfo = db.collection(session["user"]).document("userinfo")
     date_joined = userinfo.get().to_dict().get("dateJoined")
@@ -178,9 +179,10 @@ async def contact():
         return await render_template("contact.html")
     
     return await render_template("contact.html", user_email=session["user"])
-
         
-
+@routes_bp.route('/<path:path>')
+async def page_not_found(path):
+    return await render_template("404.html"), 404
 
 
 
