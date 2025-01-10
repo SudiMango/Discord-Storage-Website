@@ -161,6 +161,24 @@ async def handle_action():
         
     return jsonify({'success': True}), 200
 
+
+
+# About page
+@routes_bp.route("/about")
+async def about():
+    if not "user" in session:
+        return await render_template("about.html")
+    
+    return await render_template("about.html", user_email=session["user"])
+
+# Contact page
+@routes_bp.route("/contact")
+async def contact():
+    if not "user" in session:
+        return await render_template("contact.html")
+    
+    return await render_template("contact.html", user_email=session["user"])
+
         
 
 

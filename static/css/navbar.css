@@ -71,7 +71,7 @@ nav a:hover {
 
 
 .logo {
-    font-size: 25;
+    font-size: 25px;
     font-weight: bold;
     color: var(--accent-clr);
 }

@@ -21,7 +21,11 @@ function draw() {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.01)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = '#7289DA';
+    if (document.title == "Home") {
+        ctx.fillStyle = 'rgb(114, 137, 218, 1)';
+    } else {
+        ctx.fillStyle = 'rgb(114, 137, 218, 0.5)';
+    }
     ctx.font = fontSize + 'px monospace';
 
     // Loop through drops
