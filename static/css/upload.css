@@ -49,6 +49,7 @@ main {
     font-weight: bold;
     cursor: pointer;
     margin-bottom: 1rem;
+    min-width: 150px;
 }
 
 #drop-area {

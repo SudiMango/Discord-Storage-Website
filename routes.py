@@ -182,7 +182,10 @@ async def contact():
         
 @routes_bp.route('/<path:path>')
 async def page_not_found(path):
-    return await render_template("404.html"), 404
+    if "user" not in session:
+        return await render_template("404.html"), 404
+    
+    return await render_template("404.html", user_email=session["user"]), 404
 
 
 
