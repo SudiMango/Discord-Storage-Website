@@ -1,7 +1,7 @@
 import io
 import math
 import discord
-import cipher
+from . import cipher
 
 chunk_size = 25559 * 1024
 

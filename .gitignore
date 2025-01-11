@@ -1,4 +1,4 @@
 .env
-credentials.json
-key.bin
+hidden
 __pycache__
+py/__pycache__

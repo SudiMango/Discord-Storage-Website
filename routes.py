@@ -8,7 +8,7 @@ import firebase_admin
 from firebase_admin import firestore, credentials
 from google.cloud.firestore_v1.transforms import DELETE_FIELD
 from werkzeug.utils import secure_filename
-import file_handler as fh
+import py.file_handler as fh
 from datetime import datetime
 import pytz
 
@@ -31,7 +31,7 @@ config = {
     "databaseURL": ""
 }
 firebase = pyrebase.initialize_app(config)
-firebase_admin.initialize_app(credentials.Certificate("credentials.json"))
+firebase_admin.initialize_app(credentials.Certificate("hidden/credentials.json"))
 auth = firebase.auth()
 db = firestore.client()
 
