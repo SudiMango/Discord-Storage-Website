@@ -5,6 +5,7 @@
         <title>Upload</title>
         <link rel="stylesheet" href="static/css/upload.css">
         <link rel="stylesheet" href="static/css/navbar.css">
+        <link rel="stylesheet" href="static/css/loading_circ.css">
         <script type="text/javascript" src="static/js/navbar.js" defer></script>
         <script type="text/javascript" src="static/js/upload.js" defer></script>
     </head>
@@ -83,8 +84,13 @@
         <main>
             <h1>Upload files</h1>
             <div id="drop-area">
-                <label id="drop-lbl">Select or drag files here.</label>
-                <input type="file" id="file-input" multiple style="display: none;">
+                <svg style="display: none;" class="loading-circ" viewBox="0 0 150 150">
+                    <circle cx="75" cy="75" r="70"></circle>
+                </svg>
+                <div id="content">
+                    <label id="drop-lbl">Select or drag files here.</label>
+                    <input type="file" id="file-input" multiple style="display: none;">
+                </div>
             </div>
             <button id="upload-btn">Upload files</button>
             <div id="stats" style="display: none;">

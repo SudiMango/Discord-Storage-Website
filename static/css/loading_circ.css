@@ -1,0 +1,38 @@
+.loading-circ {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    animation: rotate 2s linear infinite;
+    z-index: 1000;
+}
+
+.loading-circ circle {
+    fill: none;
+    stroke-width: 10;
+    stroke: #7289DA;
+    stroke-linecap: round;
+    stroke-dasharray: 440;
+    stroke-dashoffset: 440;
+    animation: animate 2s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes animate {
+    0%, 100% {
+        stroke-dashoffset: 440;
+    }
+    50% {
+        stroke-dashoffset: 0;
+    }
+    50.1% {
+        stroke-dashoffset: 880;
+    }
+}

@@ -64,6 +64,16 @@ main {
     border-radius: 15px;
     scrollbar-width: thin;
     scrollbar-color: #888 transparent;
+    position: relative;
+}
+
+#circle {
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
 .item {

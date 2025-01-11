@@ -64,6 +64,7 @@ main {
     background-color: var(--hover-clr);
     margin: 30px;
     cursor: pointer;
+    position: relative;
 }
 
 #drop-area:hover {

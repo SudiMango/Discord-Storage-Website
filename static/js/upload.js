@@ -3,6 +3,9 @@ const label = document.getElementById("drop-lbl")
 const fileInput = document.getElementById("file-input")
 const uploadBtn = document.getElementById("upload-btn")
 
+const content = document.getElementById("content")
+const loading_circ = document.querySelector(".loading-circ")
+
 const stats = document.getElementById("stats")
 const currFile = document.getElementById("curr-file")
 const uploaded = document.getElementById("uploaded")
@@ -60,6 +63,9 @@ uploadBtn.addEventListener("click", async () => {
     let failedUploads = [];
     stats.style.display = "flex";
 
+    loading_circ.style.display = "block";
+    content.style.filter = "blur(5px)";
+
     let i = 0
     for (const f of filesToUpload) {
         const formData = new FormData();
@@ -91,6 +97,8 @@ uploadBtn.addEventListener("click", async () => {
             label.textContent = "Select or drag files here."
             fileInput.value = '';
             isUploading = false;
+            loading_circ.style.display = "none";
+            content.style.filter = "none";
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     alert("Files finished uploading.");

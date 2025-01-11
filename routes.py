@@ -75,7 +75,7 @@ async def view_profile():
         return redirect("/login")
     
     userinfo = db.collection(session["user"]).document("userinfo")
-    date_joined = userinfo.get().to_dict().get("dateJoined")
+    date_joined = userinfo.get().to_dict().get("date_joined")
     num_files = userinfo.get().to_dict().get("numFiles")
     storage_used = userinfo.get().to_dict().get("totalStorage")
     
@@ -118,11 +118,11 @@ async def upload_file():
                 "filename": f.filename,
                 "mtd_id": mtd_id,
                 "upload_time": curr_time.strftime('%d/%m/%Y %H:%M:%S' + " PST"),
-                "file_size": request.content_length
+                "file_size": round((request.content_length / (1024 ** 3)), 4)
             }
             })
         userinfo.update({"numFiles": (num_files+1)})
-        userinfo.update({"totalStorage": total_storage + request.content_length})
+        userinfo.update({"totalStorage": round(total_storage + (request.content_length / (1024 ** 3)), 4)})
     
     return jsonify({'success': True}), 200
 
@@ -157,8 +157,15 @@ async def handle_action():
         return await send_file(virtual_file, as_attachment=True, attachment_filename=payload.get("filename"))
     elif action == "delete":
         await fh.delete_file(payload.get("mtd_id"), client.get_channel(channel_id))
+
+        size = db.collection(session["user"]).document("fileinfo").get().to_dict()[payload.get("key")]["file_size"]
+        total_storage = db.collection(session["user"]).document("userinfo").get().to_dict()["totalStorage"]
+        db.collection(session["user"]).document("userinfo").update({"totalStorage": (total_storage - size)})
+
+        numFiles = db.collection(session["user"]).document("userinfo").get().to_dict()["numFiles"]
+        db.collection(session["user"]).document("userinfo").update({"numFiles": (numFiles - 1)})
+        
         db.collection(session["user"]).document("fileinfo").update({payload.get("key"): DELETE_FIELD})
-        # ADJUST USERINFO ACCORDINGLY
         
     return jsonify({'success': True}), 200
 
@@ -202,12 +209,17 @@ async def signup():
         email = (await request.form).get("email")
         password = (await request.form).get("password")
         cf_password = (await request.form).get("cf_password")
+        timezone = pytz.timezone("America/Vancouver")
+        curr_time = datetime.now(timezone)
         if str.__len__(password) >= 6 and password == cf_password:
             try:
                 user = auth.create_user_with_email_and_password(email, password)
                 category = utils.get(client.get_guild(guild_id).categories, id=category_id)
                 channel = await client.get_guild(guild_id).create_text_channel(user["localId"], category=category)
-                db.collection(email).document("userinfo").set({"channelId": channel.id, "numFiles": 0, "totalStorage": 0})
+                db.collection(email).document("userinfo").set({"channelId": channel.id, 
+                                                               "numFiles": 0, 
+                                                               "totalStorage": 0,
+                                                               "date_joined": curr_time.strftime('%d/%m/%Y %H:%M:%S' + " PST"),})
                 db.collection(email).document("fileinfo").set({})
                 session["user"] = email
                 return jsonify({'success': True}), 200
@@ -246,48 +258,3 @@ async def logout():
         
     return redirect("/")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-# View individual file
-@routes_bp.route("/files/<item_key>", methods=["POST", "GET"])
-async def ind_file_view(item_key):
-    if "user" not in session:
-        return redirect("/")
-    
-    if request.method == "GET":
-        try:
-            item = db.collection(session["user"]).document("fileinfo").get().to_dict()[item_key]
-            return await render_template("file_view.html", 
-                                         key=item_key,
-                                         file_name=item["filename"], 
-                                         upload_time=item["upload_time"], 
-                                         file_size=f"{item["file_size"]} bytes")
-        except:
-            return "File not found", 404
-    elif request.method == "POST":
-        #action = (await request.form).get("download")
-
-        userinfo = db.collection(session["user"]).document("userinfo")
-        channel_id = userinfo.get().to_dict().get("channelId")
-        file_info = db.collection(session["user"]).document("fileinfo").get().to_dict()[item_key]
-
-        mtd_id = file_info["mtd_id"]
-        filename = file_info["filename"]
-        virtual_file = await fh.download_file(mtd_id, client.get_channel(channel_id))
-        return await send_file(virtual_file, as_attachment=True, attachment_filename=filename)
-
-
-    return redirect(f"/files/{item_key}")
-"""
