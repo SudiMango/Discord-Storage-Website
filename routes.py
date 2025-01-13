@@ -1,13 +1,12 @@
-from discord import Intents, Client, Message, utils
+from discord import Intents, Client, utils
 import asyncio
-from quart import Blueprint, request, session, render_template, redirect, flash, send_file, jsonify, abort
+from quart import Blueprint, request, session, render_template, redirect, send_file, jsonify
 from dotenv import load_dotenv
 import os
 import pyrebase
 import firebase_admin
 from firebase_admin import firestore, credentials
 from google.cloud.firestore_v1.transforms import DELETE_FIELD
-from werkzeug.utils import secure_filename
 import py.file_handler as fh
 from datetime import datetime
 import pytz

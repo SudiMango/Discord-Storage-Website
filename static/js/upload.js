@@ -49,8 +49,6 @@ function handleFiles(files) {
 }
 
 uploadBtn.addEventListener("click", async () => {
-    if (isUploading) return;
-    isUploading = true;
 
     const numFiles = filesToUpload.length;
 
@@ -58,6 +56,9 @@ uploadBtn.addEventListener("click", async () => {
         alert("Please input files to upload!");
         return;
     }
+
+    if (isUploading) return;
+    isUploading = true;
 
     let filesUploaded = 0
     let failedUploads = [];

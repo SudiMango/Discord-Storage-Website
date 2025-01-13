@@ -77,9 +77,6 @@ async function handleDownload(mtd_id, filename) {
             files_list.style.overflowY = "scroll";
             return;
         }
-        loading_circ.style.display = "none";
-        content.style.filter = "none";
-        files_list.style.overflowY = "scroll";
 
         const blob = await response.blob();
         const downloadUrl = URL.createObjectURL(blob);
@@ -91,6 +88,10 @@ async function handleDownload(mtd_id, filename) {
         link.remove();
         URL.revokeObjectURL(downloadUrl);
         isInAction = false;
+
+        loading_circ.style.display = "none";
+        content.style.filter = "none";
+        files_list.style.overflowY = "scroll";
 
     } catch (e) {
         console.log(e);
