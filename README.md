@@ -1,7 +1,5 @@
 # Discloud Storage
-### Infinite cloud storage using discord as the storage server
-
-Website domain: http://3.99.154.51
+## Infinite cloud storage using discord as the storage server
 
 Important modules used:
 - Quart as web framework (extension of Flask with async support)
